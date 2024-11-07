@@ -1,17 +1,16 @@
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
+import EventCalendar from "@/app/Components/EventCalendar";
+import React from "react";
 
-const EventCalendar = ({ events }) => (
-  <div>
-    <Calendar
-      tileContent={({ date }) => {
-        const event = events.find(
-          (e) => new Date(e.date).toDateString() === date.toDateString()
-        );
-        return event ? <span>{event.title}</span> : null;
-      }}
-    />
-  </div>
-);
+const sampleEvents = [
+  { title: "Tech Meetup", date: "2024-12-15" },
+  { title: "Workshop", date: "2024-12-20" },
+];
 
-export default EventCalendar;
+export default function Calendar() {
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <h1 className="text-3xl font-bold text-center mb-4">Event Calendar</h1>
+      <EventCalendar events={sampleEvents} />
+    </div>
+  );
+}
