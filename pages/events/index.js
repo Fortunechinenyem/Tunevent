@@ -1,28 +1,31 @@
-// import dbConnect from "../../../lib/dbConnect";
-// import Event from "../../../models/Event";
+import EventCard from "@/app/Components/EventCard";
+import EventForm from "@/app/Components/EventForm";
+import RSVPForm from "@/app/Components/RSVPForm";
+import TicketButton from "@/app/Components/TicketButton";
+import React, { useState } from "react";
 
-// export default async function handler(req, res) {
-//   await dbConnect();
+const EventsPage = () => {
+  const [events, setEvents] = useState([]);
 
-//   switch (req.method) {
-//     case "POST":
-//       try {
-//         const event = await Event.create(req.body);
-//         res.status(201).json({ success: true, data: event });
-//       } catch (error) {
-//         res.status(400).json({ success: false });
-//       }
-//       break;
-//     case "GET":
-//       try {
-//         const events = await Event.find({});
-//         res.status(200).json({ success: true, data: events });
-//       } catch (error) {
-//         res.status(400).json({ success: false });
-//       }
-//       break;
-//     default:
-//       res.status(400).json({ success: false });
-//       break;
-//   }
-// }
+  const handleCreateEvent = (eventData) => {
+    setEvents([...events, { id: events.length + 1, ...eventData }]);
+  };
+
+  const handleRSVP = (rsvpData) => {};
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-10 px-4">
+      <EventForm onSubmit={handleCreateEvent} />
+      <div className="grid gap-8 mt-8 md:grid-cols-2 lg:grid-cols-3">
+        {events.map((event) => (
+          <EventCard key={event.id} event={event}>
+            <RSVPForm onRSVP={handleRSVP} />
+            <TicketButton eventId={event.id} />
+          </EventCard>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default EventsPage;
